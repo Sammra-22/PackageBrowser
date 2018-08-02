@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">PKG Explorer</string>
+
+    <string name="instruction">Select a package to browse its information</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="connection_warning_title">No Connection</string>
+    <string name="connection_warning_body">Could not access to the service. Please check you connection and then try again</string>
+
+    <string name="option_not_selected">Not selected</string>
+
+    <string name="read_more">Read more</string>
+    <string name="title_activity_map">Map</string>
+
+    <string name="button_package_name">Package name</string>
+    <string name="button_environment">Environment</string>
+    <string name="button_language">Language</string>
+    <string name="welcome">Welcome to PKG Explorer</string>
+
+
+</resources>

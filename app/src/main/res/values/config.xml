@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="url_base">https://forward-byte-711.appspot.com/</string>
+    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
+        AIzaSyBpwsK7dgGhXKOlcvqHICE_eJ_czYf2huU
+    </string>
+</resources>

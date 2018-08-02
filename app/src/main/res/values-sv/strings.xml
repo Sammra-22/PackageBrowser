@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PKG Explorer</string>
+    <string name="action_settings">Inställningar</string>
+    <string name="button_environment">Miljö</string>
+    <string name="button_language">Språk</string>
+    <string name="button_package_name">Paket namn</string>
+    <string name="connection_warning_body">Kan inte komma åt tjänsten. Se till att data anslutning finns</string>
+    <string name="connection_warning_title">Ingen Internet anslutning</string>
+    <string name="instruction">Välj ett Paket för att se sina uppgifter</string>
+    <string name="option_not_selected">Ingen vald</string>
+    <string name="read_more">Läs mer</string>
+    <string name="welcome">Välkommen till PKG Explorer</string>
+</resources>
