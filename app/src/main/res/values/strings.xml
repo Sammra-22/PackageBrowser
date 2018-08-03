@@ -16,6 +16,7 @@
     <string name="button_environment">Environment</string>
     <string name="button_language">Language</string>
     <string name="welcome">Welcome to PKG Explorer</string>
+    <string name="connection_error">No connection</string>
 
 
 </resources>

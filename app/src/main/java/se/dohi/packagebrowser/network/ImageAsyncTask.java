@@ -6,8 +6,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,11 +27,11 @@ import se.dohi.packagebrowser.utils.FileUtils;
  * Downloading a Thumbernail image
  */
 public class ImageAsyncTask extends AsyncTask<Path, Void, Bitmap> {
-    final static String TAG = ImageAsyncTask.class.getName();
-    Context context;
-    ImageListener listener;
+    private final static String TAG = ImageAsyncTask.class.getName();
+    private Context context;
+    private ImageListener listener;
 
-    public ImageAsyncTask(Context context, ImageListener listener){
+    public ImageAsyncTask(Context context, ImageListener listener) {
         this.context = context;
         this.listener = listener;
     }
@@ -46,7 +44,7 @@ public class ImageAsyncTask extends AsyncTask<Path, Void, Bitmap> {
             String fileName = paths[0].getName();
             File imageFile = FileUtils.getImageFile(context, fileName);
 
-            if(imageFile.exists() && imageFile.length()>0) {
+            if (imageFile.exists() && imageFile.length() > 0) {
                 Log.i(TAG, "File exists: " + imageFile.getAbsolutePath());
                 FileInputStream streamIn = new FileInputStream(imageFile);
                 Bitmap bitmap = BitmapFactory.decodeStream(streamIn); //This gets the image
@@ -55,35 +53,38 @@ public class ImageAsyncTask extends AsyncTask<Path, Void, Bitmap> {
             }
 
             Log.i(TAG, "Grabbing file: " + url);
-            InputStream inStream=null;
-            int response=-1;
-            while(response==-1 || response==301 || response==302) {
+            InputStream inStream = null;
+            int response = -1;
+            while (response == -1 || response == 301 || response == 302) {
                 if (url.startsWith("https")) {
                     HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
                     connection.setInstanceFollowRedirects(false);
                     connection.connect();
                     response = connection.getResponseCode();
                     url = connection.getHeaderField("Location");
-                    if(response==200)
-                        inStream=connection.getInputStream();
+                    if (response == 200) {
+                        inStream = connection.getInputStream();
+                    }
                 } else {
                     HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
                     connection.setInstanceFollowRedirects(false);
                     connection.connect();
                     response = connection.getResponseCode();
                     url = connection.getHeaderField("Location");
-                    if(response==200)
-                        inStream=connection.getInputStream();
+                    if (response == 200) {
+                        inStream = connection.getInputStream();
+                    }
                 }
                 Log.i(TAG, "Response code: " + response);
             }
 
 
-            if(inStream!=null) {
+            if (inStream != null) {
                 result = BitmapFactory.decodeStream(inStream);
                 OutputStream output = new FileOutputStream(imageFile);
-                if (result != null)
+                if (result != null) {
                     result.compress(Bitmap.CompressFormat.PNG, 100, output);
+                }
                 // flushing output
                 output.flush();
                 // closing streams
@@ -103,7 +104,8 @@ public class ImageAsyncTask extends AsyncTask<Path, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
-        if(bitmap!=null && listener!=null)
+        if (bitmap != null && listener != null) {
             listener.onDownloadComplete();
+        }
     }
 }

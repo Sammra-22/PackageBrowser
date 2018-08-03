@@ -13,16 +13,17 @@ import se.dohi.packagebrowser.listener.DialogPickerListener;
  */
 public class DialogUtils {
 
-    static int selection;
+    private static int selection;
 
     /**
      * Display a simple Alert
+     *
      * @param context
-     * @param title title
-     * @param body message
+     * @param title    title
+     * @param body     message
      * @param listener callback when dismissed
      */
-    public static void showAlert(final Context context, String title, String body, final DialogDismissListener listener){
+    public static void showAlert(final Context context, String title, String body, final DialogDismissListener listener) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setCancelable(false)
                 .setTitle(title)
@@ -30,7 +31,7 @@ public class DialogUtils {
                 .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if(listener!=null)
+                        if (listener != null)
                             listener.onDismiss();
                     }
                 });
@@ -39,13 +40,14 @@ public class DialogUtils {
 
     /**
      * Display a dialog selector
+     *
      * @param context
-     * @param title title
-     * @param items single choice items
+     * @param title    title
+     * @param items    single choice items
      * @param selected default selection
      * @param listener callback when selected
      */
-    public static void showPicker(final Context context, String title, String[] items, int selected, final DialogPickerListener listener){
+    public static void showPicker(final Context context, String title, String[] items, int selected, final DialogPickerListener listener) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         selection = selected;
         builder.setCancelable(false)

@@ -1,8 +1,8 @@
 package se.dohi.packagebrowser.activities;
 
 import android.location.Location;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,13 +24,22 @@ import se.dohi.packagebrowser.model.Line;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     List<Location> path;
-    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        path= ((Line)getIntent().getExtras().getSerializable("path")).getCoordinates();
+        if (getIntent().getExtras() != null) {
+            Line line = (Line) getIntent().getExtras().getSerializable("path");
+            if (line != null) {
+                path = line.getCoordinates();
+            } else {
+                finish();
+            }
+        } else {
+            finish();
+        }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -49,21 +58,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
-        final LatLng start = new LatLng(path.get(0).getLatitude(), path.get(0).getLongitude());
-        final LatLng end = new LatLng(path.get(path.size()-1).getLatitude(), path.get(path.size()-1).getLongitude());
+        final LatLng start = new LatLng(path.get(0).getLatitude(),
+                path.get(0).getLongitude());
+        final LatLng end = new LatLng(path.get(path.size() - 1).getLatitude(),
+                path.get(path.size() - 1).getLongitude());
 
-        mMap.addMarker(new MarkerOptions().position(start).title("Start"));
-        mMap.addMarker(new MarkerOptions().position(end).title("Finish"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(start));
+        googleMap.addMarker(new MarkerOptions().position(start).title("Start"));
+        googleMap.addMarker(new MarkerOptions().position(end).title("Finish"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(start));
 
         //Render path route
-        PolylineOptions route= new PolylineOptions().geodesic(true);
-        for(Location point:path)
+        PolylineOptions route = new PolylineOptions().geodesic(true);
+        for (Location point : path)
             route.add(new LatLng(point.getLatitude(), point.getLongitude()));
 
-        mMap.addPolyline(route);
-
+        googleMap.addPolyline(route);
     }
 }

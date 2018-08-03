@@ -11,34 +11,35 @@ import se.dohi.packagebrowser.model.Package;
  */
 public class PackageManager {
 
-    static PackageManager instance;
-    List<Package> mPackages;
-    Bundle mBundle;
+    private static PackageManager instance;
+    private List<Package> mPackages;
+    private Bundle mBundle;
 
 
-    private PackageManager(){
+    private PackageManager() {
         mPackages = new ArrayList<>();
     }
 
     public static PackageManager getInstance() {
-        if(instance==null)
+        if (instance == null) {
             instance = new PackageManager();
+        }
         return instance;
     }
 
-    public void setPackages(List<Package> packages){
-        mPackages = packages;
-    }
-
-    public List<Package> getPackages(){
+    public List<Package> getPackages() {
         return mPackages;
     }
 
-    public void setBundle(Bundle bundle) {
-        this.mBundle = bundle;
+    public void setPackages(List<Package> packages) {
+        mPackages = packages;
     }
 
     public Bundle getBundle() {
         return mBundle;
+    }
+
+    public void setBundle(Bundle bundle) {
+        this.mBundle = bundle;
     }
 }

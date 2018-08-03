@@ -7,22 +7,13 @@ import java.util.List;
  */
 public class Bundle {
 
-    String info;
-    String moreInfo;
+    private String info;
+    private String moreInfo;
 
-    List<Path> paths;
+    private List<Path> paths;
 
-    public Bundle(String info){
+    public Bundle(String info) {
         this.info = info;
-    }
-
-
-    public void setMoreInfo(String moreInfo) {
-        this.moreInfo = moreInfo;
-    }
-
-    public void setPaths(List<Path> paths) {
-        this.paths = paths;
     }
 
     public String getInfo() {
@@ -33,7 +24,15 @@ public class Bundle {
         return moreInfo;
     }
 
+    public void setMoreInfo(String moreInfo) {
+        this.moreInfo = moreInfo;
+    }
+
     public List<Path> getPaths() {
         return paths;
+    }
+
+    public void setPaths(List<Path> paths) {
+        this.paths = paths;
     }
 }

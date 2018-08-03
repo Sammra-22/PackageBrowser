@@ -22,15 +22,16 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public abstract class HttpsAsyncTaskJson extends AsyncTask<String, Void, Object> {
     private final static String TAG = HttpsAsyncTaskJson.class.getName();
-    protected enum FORMAT {OBJECT,ARRAY}
-
-    FORMAT returnType;
+    private FORMAT returnType;
 
     /**
      * Default Constructor
+     *
      * @param returnType expected data structure
      */
-    protected HttpsAsyncTaskJson(FORMAT returnType){this.returnType = returnType;}
+    protected HttpsAsyncTaskJson(FORMAT returnType) {
+        this.returnType = returnType;
+    }
 
     abstract protected void onResult(Object result);
 
@@ -38,36 +39,34 @@ public abstract class HttpsAsyncTaskJson extends AsyncTask<String, Void, Object>
     protected Object doInBackground(String... arg0) {
         Object response = null;
         try {
-            Log.i(TAG, "+++ URL: " + arg0[0]);
             URL url = new URL(arg0[0]);
             HttpsURLConnection c = (HttpsURLConnection) url.openConnection();
             c.setRequestMethod("GET");
             c.setConnectTimeout(5000);
             c.setReadTimeout(5000);
             c.connect();
-            if(c.getResponseCode()==200){
-                //            FileOutputStream fos = new FileOutputStream(updateVersion);
+            if (c.getResponseCode() == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
                 StringBuffer sb = new StringBuffer();
                 String line;
                 while ((line = br.readLine()) != null) {
                     sb.append(line);
                 }
-                if(returnType==FORMAT.OBJECT)
+                if (returnType == FORMAT.OBJECT) {
                     response = new JSONObject(sb.toString());
-                else if(returnType==FORMAT.ARRAY)
+                } else if (returnType == FORMAT.ARRAY) {
                     response = new JSONArray(sb.toString());
-                Log.i(TAG, "+++ JSON: " + response);
+                }
                 br.close();
             }
 
-        } catch (MalformedURLException | ProtocolException e){
+        } catch (MalformedURLException | ProtocolException e) {
             Log.e(TAG, "Request failure");
             e.printStackTrace();
-        } catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, "Connection failure");
             e.printStackTrace();
-        } catch (JSONException e){
+        } catch (JSONException e) {
             Log.e(TAG, "Response failure");
             e.printStackTrace();
         }
@@ -79,4 +78,6 @@ public abstract class HttpsAsyncTaskJson extends AsyncTask<String, Void, Object>
         super.onPostExecute(result);
         onResult(result);
     }
+
+    protected enum FORMAT {OBJECT, ARRAY}
 }

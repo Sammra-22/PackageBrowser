@@ -7,14 +7,14 @@ public enum Environment {
     DEVELOPMENT,
     PRODUCTION;
 
-    public static String[] toArray(){
-        return new String[]{"\n"+Environment.values()[0].toString()+"\n",
-                "\n"+Environment.values()[1].toString()+"\n"};
+    public static String[] toArray() {
+        return new String[]{String.format("\n%s\n", Environment.values()[0].toString()),
+                String.format("\n%s\n", Environment.values()[1].toString())};
     }
 
     @Override
     public String toString() {
-        switch (this){
+        switch (this) {
             case DEVELOPMENT:
                 return "Development";
             case PRODUCTION:

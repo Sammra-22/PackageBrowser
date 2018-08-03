@@ -6,36 +6,17 @@ import java.util.List;
 /**
  * Created by Sam22 on 10/1/15.
  */
-public class Path implements Serializable{
+public class Path implements Serializable {
 
-    String name;
-    String info;
-    long length;
-    long time;
-    String imageUri;
-    List<Line> polyline;
+    private String name;
+    private String info;
+    private long length;
+    private long time;
+    private String imageUri;
+    private List<Line> polyline;
 
-
-    public Path(String name){this.name = name;}
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
-
-    public void setLength(long length) {
-        this.length = length;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    public void setPolyline(List<Line> polyline) {
-        this.polyline = polyline;
-    }
-
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
+    Path(String name) {
+        this.name = name;
     }
 
     public String getInfo() {
@@ -60,5 +41,42 @@ public class Path implements Serializable{
 
     public List<Line> getPolyline() {
         return polyline;
+    }
+
+    public void setPolyline(List<Line> polyline) {
+        this.polyline = polyline;
+    }
+
+    public static class Builder {
+        private Path path;
+
+        public Builder(String pathName) {
+            this.path = new Path(pathName);
+        }
+
+        public Builder setInfo(String info) {
+            path.info = info;
+            return this;
+        }
+
+        public Builder setTime(long time) {
+            path.time = time;
+            return this;
+        }
+
+        public Builder setLength(long length) {
+            path.length = length;
+            return this;
+        }
+
+        public Builder setImageUri(String imageUri) {
+            path.imageUri = imageUri;
+            return this;
+        }
+
+        public Path toPath() {
+            return path;
+        }
+
     }
 }

@@ -9,20 +9,21 @@ import java.io.File;
  */
 public class FileUtils {
 
-    static File storageDir;
+    private static File storageDir;
 
-    public static File getStorageDir(Context context){
-        if(storageDir==null)
-            storageDir= context.getExternalFilesDir(null);
+    private static File getStorageDir(Context context) {
+        if (storageDir == null) {
+            storageDir = context.getExternalFilesDir(null);
+        }
         return storageDir;
     }
 
-    public static File getImageFile(Context context, String name){
-        return new File(getStorageDir(context).getAbsolutePath(),name);
+    public static File getImageFile(Context context, String name) {
+        return new File(getStorageDir(context).getAbsolutePath(), name);
     }
 
-    public static boolean imageExists(Context context, String name){
-        return getImageFile(context, name).exists() && getImageFile(context, name).length()>0;
+    public static boolean imageExists(Context context, String name) {
+        return getImageFile(context, name).exists() && getImageFile(context, name).length() > 0;
     }
 
 }

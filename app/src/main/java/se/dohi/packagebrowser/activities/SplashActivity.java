@@ -18,7 +18,34 @@ import se.dohi.packagebrowser.utils.DialogUtils;
  * Created by Sam22 on 9/28/15.
  * Splash screen- Loading packages
  */
-public class SplashActivity extends Activity implements DialogDismissListener{
+public class SplashActivity extends Activity implements DialogDismissListener {
+
+    /**
+     * Broadcast receiver monitoring packages acquisition
+     */
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+            if (intent.getAction() != null && intent.getAction() == Const.BROADCAST_PACKAGES_RESULT) {
+                final boolean success = intent.getBooleanExtra(Const.SUCCESS, false);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (success) {
+                            startActivity(new Intent(SplashActivity.this, DisplayActivity.class));
+                            finish();
+                        } else
+                            DialogUtils.showAlert(SplashActivity.this,
+                                    context.getString(R.string.connection_warning_title),
+                                    context.getString(R.string.connection_warning_body),
+                                    SplashActivity.this
+                            );
+                    }
+                }, 500);
+
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,33 +60,6 @@ public class SplashActivity extends Activity implements DialogDismissListener{
         unregisterReceiver(receiver);
         super.onDestroy();
     }
-
-    /**
-     * Broadcast receiver monitoring packages acquisition
-     */
-    BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(final Context context, Intent intent) {
-            if(intent.getAction()!=null && intent.getAction()==Const.BROADCAST_PACKAGES_RESULT){
-                final boolean success =intent.getBooleanExtra(Const.SUCCESS, false);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(success) {
-                            startActivity(new Intent(SplashActivity.this, DisplayActivity.class));
-                            finish();
-                        }else
-                            DialogUtils.showAlert(SplashActivity.this,
-                                    context.getString(R.string.connection_warning_title),
-                                    context.getString(R.string.connection_warning_body),
-                                    SplashActivity.this
-                            );
-                    }
-                },500);
-
-            }
-        }
-    };
 
     @Override
     public void onDismiss() {

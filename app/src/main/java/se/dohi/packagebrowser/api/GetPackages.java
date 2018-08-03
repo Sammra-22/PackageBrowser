@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +24,18 @@ import se.dohi.packagebrowser.utils.Const;
  */
 public class GetPackages extends HttpsAsyncTaskJson {
 
-    Context context;
+    WeakReference<Context> context;
 
-    public GetPackages(Context context){
+    public GetPackages(Context context) {
         super(FORMAT.ARRAY);
-        this.context = context;
+        this.context = new WeakReference<>(context);
     }
 
     /**
      * execute query
      */
-    public void query(){
-        execute(context.getString(R.string.url_base)+"/list");
+    public void query() {
+        execute(context.get().getString(R.string.url_base) + "/list");
     }
 
     @Override
@@ -52,9 +53,9 @@ public class GetPackages extends HttpsAsyncTaskJson {
                     JSONObject pckg = pckgList.getJSONObject(i);
                     Package unit = new Package(pckg.getString("name"));
                     String languages = pckg.optString("lang");
-                    if(!TextUtils.isEmpty(languages)){
+                    if (!TextUtils.isEmpty(languages)) {
                         String[] listLang = languages.split(",");
-                        for(String lang:listLang){
+                        for (String lang : listLang) {
                             unit.addLanguage(lang);
                         }
                     }
@@ -62,10 +63,10 @@ public class GetPackages extends HttpsAsyncTaskJson {
                 }
                 PackageManager.getInstance().setPackages(packages);
             }
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        context.sendBroadcast(broadIntent);
+        context.get().sendBroadcast(broadIntent);
     }
 }

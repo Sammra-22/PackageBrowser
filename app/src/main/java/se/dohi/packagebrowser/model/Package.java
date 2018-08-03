@@ -8,16 +8,17 @@ import java.util.Set;
  */
 public class Package {
 
-    String name;
-    Set<String> languages;
+    private String name;
+    private Set<String> languages;
 
-
-    public Package(String name){
+    public Package(String name) {
         this.name = name;
         languages = new HashSet<>();
     }
 
-    public void addLanguage(String lang){languages.add(lang);}
+    public void addLanguage(String lang) {
+        languages.add(lang);
+    }
 
     public String getName() {
         return name;
@@ -26,7 +27,5 @@ public class Package {
     public Set<String> getLanguages() {
         return languages;
     }
-
-
 
 }
